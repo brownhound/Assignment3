@@ -1,4 +1,4 @@
-best <- function(state, outcome) {
+best <- function(stateAbv, outcome) {
   
   ## Read Outcome Data
   
@@ -7,8 +7,8 @@ best <- function(state, outcome) {
   ## Check that the state and outcome are valid
   ## outcomes considered are attack, failure, and pneumonia
   
-  if(!any(state == data$State)){
-    stop(state, " is not a valid state")
+  if(!any(stateAbv == data$State)){
+    stop(StateAbv, " is not a valid state")
   }
   else if(!any(outcome %in% c("heart attack", "heart failure", "pneumonia"))){
     stop(outcome, " is not a valid outcome value")
@@ -34,5 +34,14 @@ best <- function(state, outcome) {
   ## Return hospital name in that state with lowest 30-day 
   ## death rate
   
-  return(data)
+  ## Get data set for state only
+  
+  dataState <- NULL
+  dataState <- data[data[, "State"] == stateAbv, ]
+  
+  ##Return Hosptital Name with Highest Ranking in "outcome" column
+  
+  bestFacility <- dataState$Hospital.Name[which.min(dataState$
+                                                      
+  return(bestFacility)
 }
