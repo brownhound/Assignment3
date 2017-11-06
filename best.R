@@ -2,7 +2,7 @@ best <- function(stateAbv, outcome) {
   
   ## Read Outcome Data
   
-  data <- read.csv("outcome-of-care-measures.csv", colClasses = "character")
+  data <- read.csv("outcome-of-care-measures.csv")
   
   ## Check that the state and outcome are valid
   ## outcomes considered are attack, failure, and pneumonia
@@ -11,37 +11,30 @@ best <- function(stateAbv, outcome) {
     stop(StateAbv, " is not a valid state")
   }
   else if(!any(outcome %in% c("heart attack", "heart failure", "pneumonia"))){
-    stop(outcome, " is not a valid outcome value")
+    stop(outcome, " is not a valid outcome")
   }
-  
-  ## Assign column identifier based on outcome identified
-  ## HA = 11, HF = 17, P = 23
-  
-  columnId <- NULL
-  
-  if(outcome == "heart attack"){
-    columnId <- 11
-  }
-  
-  else if(outcome == "heart failure"){
-    columnId <- 17
-  }
-  
-  else if(outcome == "pneumonia"){
-    columnId <- 23
-  }
-  
-  ## Return hospital name in that state with lowest 30-day 
-  ## death rate
   
   ## Get data set for state only
   
   dataState <- NULL
   dataState <- data[data[, "State"] == stateAbv, ]
   
-  ##Return Hosptital Name with Highest Ranking in "outcome" column
+  ##Return Hosptital Name with Highest Ranking in "outcome" column in the state
   
-  bestFacility <- dataState$Hospital.Name[which.min(dataState$
-                                                      
+  if(outcome == "heart attack"){
+    bestFacility <- dataState$Hospital.Name[which.min(
+      dataState$Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack)]
+  }
+  
+  else if(outcome == "heart failure"){
+    bestFacility <- dataState$Hospital.Name[which.min(
+      dataState$Hospital.30.Day.Death..Mortality..Rates.from.Heart.Failure)]
+  }
+  
+  else if(outcome == "pneumonia"){
+    bestFacility <- dataState$Hospital.Name[which.min(
+      dataState$Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia)]
+  }
+  
   return(bestFacility)
 }
