@@ -1,3 +1,8 @@
+## Script to satisfy the requirements of Assignment 3.  Takes a state, an outcome
+## and find the hospital in that state with the lowest death rate from the care
+## outcome data provided.
+
+
 best <- function(stateAbv, outcome) {
   
   ## Read Outcome Data
